@@ -25,8 +25,13 @@ function formatplus(num){
   function reverse(s){
     return s.split('').reverse().join('')
   }
+  
+console.log(formatplus('0.000123'))
 
-  console.log(formatplus('123456789.0001234'))
-
+  function emoney(num) {
+      return num.toLocaleString('en-US');
+    }
+    
+    
 
   

@@ -8,17 +8,19 @@
 // 方法一：
 // 双指针技术，就是相当于有一个窗口，窗口的左右两边就是两个指针，我们根据窗口内值之和来确定窗口的位置和宽度
 function FindContinuousSequence(sum){
-    let plow =1,phigh =2,res=[]
-    while (plow<phigh) {
-        let curSum = (plow+phigh)*(phigh-plow+1)/2
+    let winlow =1,winhigh =2,res=[]
+    while (winlow<winhigh) {
+        let curSum = (winlow+winhigh)*(winhigh-winlow+1)/2
         if(curSum === sum){
             let list = []
-            for (let i = plow; i <= phigh; i++) {
+            for (let i = winlow; i <= winhigh; i++) {
                 list.push(i)
             }
             res.push(list)
         }
-        curSum<sum ? phigh++ : plow++
+        curSum<sum ? winhigh++ : winlow++
     }
     return res
 }
+
+console.log(FindContinuousSequence(15))

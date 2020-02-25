@@ -1,41 +1,34 @@
-// call核心：
-// 将函数设为对象的属性
-// 执行&删除这个函数
-// 指定this到函数并传入给定参数执行函数
-// 如果不传入参数，默认指向为 window
-Function.prototype.myCall = function(context){
+Function.prototype.call2 = function(content = window) {
+    content.fn = this;
+    let args = [...arguments].slice(1);
+    let result = content.fn(...args);
+    delete content.fn;
+    return result;
+}
+let foo = {
+    value: 1
+}
+function bar(name, age) {
+    console.log(name)
+    console.log(age)
+    console.log(this.value);
+}
+bar.call2(foo, 'black', '18') // black 18 1
+
+Function.prototype.apply2 = function(context = window) {
     context.fn = this
-    let args = []
-    for (let i = 1, len = arguments.length;i<len; i++) {
-        args.push(arguments[i])
+    let result;
+    // 判断是否有第二个参数
+    if(arguments[1]) {
+        result = context.fn(...arguments[1])
+    } else {
+        result = context.fn()
     }
-    context.fn(...args)
-    let res = context.fn(...args)
     delete context.fn
-    return res
+    return result
 }
 
-// 模拟 apply
-Function.prototype.myapply = function(context, arr) {
-    var context = Object(context) || window
-    context.fn = this
-  
-    varres
-    if (!arr) {
-     res = context.fn()
-    } else {
-      let args = []
-      for (let i = 0, len = arr.length; i < len; i++) {
-        args.push("arr[" + i + "]")
-      }
-     res = eval("context.fn(" + args + ")")
-    }
-  
-    delete context.fn
-    returnres
-  }
-//bind
-  Function.prototype.bind2 = function(content) {
+Function.prototype.bind2 = function(content) {
     if(typeof this != "function") {
         throw Error("not a function")
     }

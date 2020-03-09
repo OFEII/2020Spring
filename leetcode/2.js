@@ -21,17 +21,18 @@ var uniquePathsWithObstacles = function(obstacleGrid) {
     let n = obstacleGrid.length
     let m = obstacleGrid[0].length
     let dp = new Array(n).fill(0).map(()=>new Array(m).fill(0))
-    dp[0][0] = obstacleGrid[0][0] == 0?1:0
-    if(dp[0][0]==0){
-        return 0
+    dp[0][0] = obstacleGrid[0][0] == 0 ? 1 : 0;
+    // 如果起点就是障碍物
+    if(!dp[0][0]){
+        return 0 ;
     }
     for (let i = 1; i < n; i++) {
-        if(dp[i][0]!=1){
+        if(obstacleGrid[i][0]!=1){
             dp[i][0]=dp[i-1][0]
         }
     }
     for (let j = 1; j < m; j++) {
-        if(dp[0][j]!=1){
+        if(obstacleGrid[0][j]!=1){
             dp[0][j]=dp[0][j-1]
         }
     }
@@ -43,6 +44,6 @@ var uniquePathsWithObstacles = function(obstacleGrid) {
         
     }
     return dp[n-1][m-1]
-
 };
-console.log(uniquePathsWithObstacles([[0,0,0],[0,1,0],[0,0,0]]))
+
+console.log(uniquePathsWithObstacles([[0,1]]))

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+.startWrapper {
+position: absolute;
+width: 300px;
+height: 200px;
+left: 50%;
+top: 20%;
+transform: translate(-50%, 0);
+text-align: center;
+}
+.formWrapper label{
+display: inline-block;
+width: 70px;
+text-align: center;
+}
+.money {
+letter-spacing: 5px;
+}
+.formWrapper button {
+margin-top: 10px;
+padding: 5px 0;
+background-color: #63B8FF;
+width: 140px;
+color: white;
+}
+.playWrapper {
+position: absolute;
+left: 0;
+top: 0;
+width: 100%;
+height: 100%;
+background-color: rgba(143,143,143,0.5);
+text-align: center;
+display: none;
+}
+.play {
+width: 300px;
+height: 450px;
+position: absolute;
+left: 50%;
+top: 50%;
+transform: translate(-50%, -50%);
+background-color: #B22222;
+opacity: 1;
+border-radius: 10px;
+overflow: hidden;
+}
+.info {
+position: relative;
+top: 40px;
+}
+.info img {
+border-radius: 35px;
+}
+.info article {
+font-size: 15px;
+}
+.info article h3, .info article h4 {
+color: white;
+}
+.info article h4:nth-of-type(1) {
+color: grey;
+}
+.play button[name=get] {
+width: 80px;
+height: 80px;
+border-radius: 40px;
+background-color: orange;
+position: relative;
+top: 40px;
+animation: myrotate 1s infinite;
+}
+@keyframes myrotate {
+0% {
+transform: rotateY(0deg)
+}
+100% {
+transform: rotateY(360deg)
+}
+}
+.slide {
+position: absolute;
+width: 100%;
+bottom: 150px;
+height: 600px;
+border-radius: 70px;
+background-color: #EE6A50;
+z-index: -1;
+transition: bottom 0.4s;
+}
+.resultWrapper {
+display: none;
+position: relative;
+top: 50px;
+color: white;
+}
+.result {
+position: relative;
+left: 50px;
+width: 200px;
+height: 180px;
+font-size: 10px;
+background-color: #ee794280;
+border-radius: 10px;
+text-align: left;
+box-sizing: border-box;
+padding-left: 10px;
+overflow: auto
+}
+.result span {
+white-space: pre-wrap;
+}
+.result p span:nth-of-type(3) {
+display: none;
+color: #EEC900;
+}
+.close {
+position: absolute;
+top: 10px;
+right: 20px;
+width: 20px;
+height: 20px;
+font-size: 15px;
+color: white;
+background-color: #EE6A50;
+}
+.close,button{cursor:pointer}
+</style>
+<body>
+<div class="startWrapper">
+<h2>红包模拟器</h2>
+<form class="formWrapper" action="#" method="post">
+<div>
+<label for="total">红包个数</label><input type="text" name="total" value="0" /><span>个</span>
+</div>
+<div>
+<label for="money" class="money">总金额</label><input type="text" name="money" value="0" /><span>元</span>
+</div>
+<button type="button" name="send">发红包</button>
+</form>
+</div>
+<div class="playWrapper">
+<section class="play">
+<section class="info">
+<img src="http://s3a.pstatp.com/cg_growth/resource/boilerplate/images/redpacket/avatar.png" width="70px" height="70px">
+<article>
+<h3>JScoder</h3>
+<h4>给您发送了一个红包</h4>
+<h4>恭喜发财 大吉大利</h4>
+</article>
+</section>
+<div class="slide"></div>
+<button type="button" name="get">拆红包</button>
+<section class="resultWrapper">
+<h2></h2>
+<h5>红包领取榜</h5>
+<article class="result"></article>
+</section>
+<div class="close">
+<p>X</p>
+</div>
+</section>
+</div>
+</body>
+<script>
+
+const button1 = document.querySelector("button[name=send]"),
+totalDom = document.querySelector("input[name=total]"),
+moneyDom = document.querySelector("input[name=money]"),
+startWrapper = document.querySelector(".startWrapper"),
+playWrapper = document.querySelector(".playWrapper")
+
+let total, money, result = []
+button1.onclick = function() {
+total = totalDom.value
+money = moneyDom.value
+startWrapper.style.display = 'none'
+playWrapper.style.display = "block"
+console.log(total, money)
+}
+
+function createList(){
+let p = ''
+for(let i = 1; i <= total; i++){
+console.log(i)
+p += `<p><span>用户${i}: </span><span></span><span> 手气最佳</span></p>`
+}
+document.querySelector(".result").innerHTML = p
+}
+
+const button2 = document.querySelector("button[name=get]"),
+slide = document.querySelector(".slide"),
+info = document.querySelector(".info article"),
+resultWrapper = document.querySelector(".resultWrapper")
+
+
+button2.onclick = function() {
+slide.style.bottom = "370px"
+info.style.display = "none"
+button2.style.display = "none"
+resultWrapper.style.display = "block"
+
+write()
+}
+
+function write() {
+createList()
+users = [...document.querySelectorAll(".result p span:nth-of-type(2)")]
+bests = [...document.querySelectorAll(".result p span:nth-of-type(3)")]
+result = calculate(money, 0.01, money/2, total)
+let besti = 0, cur = 0
+users.forEach((d, i) => {
+d.textContent = result[i]
+//console.log(result[i])
+if (result[i] > cur){
+cur = result[i]
+besti = i
+}
+})
+
+bests[besti].style.display = "inline"
+document.querySelector(".resultWrapper h2").textContent = result[besti]
+}
+
+function calculate(total, min, max, length) {
+const result = []
+let restValue = total
+let restLength = length
+for (let i = 0; i < length - 1; i++) {
+restLength--
+
+const restMin = restLength * min
+const restMax = restLength * max
+
+const usable = restValue - restMin
+
+const minValue = Math.max(min, restValue - restMax)
+
+const limit = Math.min(usable - minValue, (max - minValue) * 2)
+
+result[i] = Math.min(max, minValue + Math.floor(limit * Math.random()))
+restValue -= result[i]
+}
+result[length - 1] = restValue.toFixed(2)
+
+return result
+}
+
+function reset() {
+startWrapper.style.display = ""
+playWrapper.style.display = "none"
+
+slide.style.bottom = "150px"
+info.style.display = ""
+button2.style.display = ""
+resultWrapper.style.display = "none"
+
+bests.forEach((d) => d.style.display = "none")
+}
+
+const close = document.querySelector(".close")
+close.onclick = function() {
+reset()
+}
+</script>
+</body>
+</html>

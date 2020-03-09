@@ -1,0 +1,132 @@
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+     <title>字节跳动 todolist</title>
+     <style>
+         *{
+             margin: 0;
+             padding: 0;
+         }
+         body{
+             text-align: center;
+             background-color: #f5f5f5;
+         }
+         h1{
+             margin: 30px 0 0 0;
+             color: #ebdede;
+             font-size: 3.5rem;
+             font-weight: 300;
+             letter-spacing: -2px;
+         }
+         #back{
+             width: 400px;
+             margin: 0 auto;
+             border: 1px solid #ddd;
+             box-shadow: 1px 4px 8px rgba(51, 51, 51, .4);
+             background-color: #f2f2f2;
+         }
+         #back input{
+             width: 100%;
+             box-sizing: border-box;
+             line-height: 1rem;
+             border: none;
+             padding: .5rem 2.6rem;
+             font-size: 1rem;
+             border-bottom: 2px solid #f4f4f4;
+         }
+         #list_back .single{
+             position: relative;
+             background-color: #fff;
+             border-bottom: 2px solid #f4f4f4;
+         }
+         #list_back .single p{
+             width: 70%;
+             height: 1.618rem;
+             line-height: 1rem;
+             padding: .5rem 2.6rem;
+             text-align: left;         
+         }
+         #list_back .single span{
+             position: absolute;
+             right: 5px;
+             top: 10px;
+             width: 30px;
+             text-align: center;
+             line-height: 1rem;
+             cursor: pointer;
+             color: #A75C60;
+         }
+         .down{
+             width: 50px;
+             height: 0;
+             position: relative;
+             left: .8rem;
+             top: -1rem;
+             transform: rotateZ(90deg);
+             color: rgb(196, 192, 192);
+             font-size: 1.2rem;
+         }
+     </style>
+ </head>
+ <body>
+     <h1>todos</h1>
+     <div id="back">
+        <input id="addInput" type="text" name="add">
+            <p class="down">></p>
+        <div id="list_back"></div>
+    </div>
+     
+ </body>
+<script>
+    var oAddInput = document.getElementById('addInput');
+    var oList_back = document.getElementById('list_back');
+    var all = document.getElementsByClassName('single');
+    oAddInput.onkeyup = function(){
+        // alert(event.keyCode);//13
+        // alert(event.code);//Enter
+        if(event.keyCode == '13'){
+            // alert('add');
+            var oDiv = document.createElement('div');
+            var oSpan = document.createElement('span');
+            var oP = document.createElement('p');
+            oDiv.appendChild(oP);
+            oDiv.appendChild(oSpan);
+            oP.innerHTML = oAddInput.value;
+            oSpan.innerHTML = '&times;';
+            oDiv.className = 'single';
+            oList_back.appendChild(oDiv);
+            oAddInput.value = '';//清空输入框
+            oSpan.onclick= function(){
+                oList_back.removeChild(this.parentNode);//绑定删除方法
+            };
+        }
+    };
+    //模糊查询
+    function select(){
+        oAddInput.addEventListener('keyup', function(e){//监听键盘抬起事件（所有键盘按钮）
+            // console.log(e.target.value);
+            var str = e.target.value;
+            var reg = new RegExp('(' + str + ')', 'g');//匹配到的文字变红色，准备工作
+            for( var i = 0; i<all.length; i++ ){
+                var one = all[i].getElementsByTagName('p')[0];
+                var newStr = one.innerText.replace(reg, '<font color=#F26D6D>$1</font>');//换-->红色，用innerText防止用innerHTML将标签也读取出来出错。
+                if( one.innerText.indexOf(str) == -1 ){//也选用innerHTML
+                    all[i].style.display = 'none';//匹配不到的掩藏
+                }else{
+                    one.innerHTML = newStr;//匹配到的变红
+                }
+            }
+            if(str == ''){
+                for( var i = 0; i<all.length; i++ ){
+                    all[i].style.display = 'block';//输入框空时全部显示
+                }
+            }
+        });
+    }
+    select();  //函数解析完就运行
+
+</script>
+ </html>

@@ -1,6 +1,5 @@
 function create(proto) {
-    function F() {
-        
+    function F() {   
     }
     F.prototype = proto
     return new F()

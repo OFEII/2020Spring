@@ -22,3 +22,9 @@ console.log(res1)
 console.log(res2)
 console.log(res3)
 
+var findNumberIn2DArray = function(matrix, target) {
+    return matrix.map(e=>e.includes(target)).includes(true)
+};
+console.log(findNumberIn2DArray([],0))
+
+

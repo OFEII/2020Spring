@@ -1,28 +1,15 @@
-function ps(n){
-    let res =[]
-    let str = "()"
-    for (let i = 0; i < n; i++) {
-        res.push(str)
+var ps = function(n) {
+    let res = []
+    helper(0, 0, n, '', res)
+    return res
+};
+
+function helper (left, right, n, s, res) {
+    if (left == n && right == n) {
+        return res.push(s)
     }
+    if (left < n) helper (left + 1, right, n, s + '(', res)
+    if (right < left) helper (left, right + 1, n, s + ')', res)
 }
 console.log(ps(1))
 console.log(ps(2))
-
-arr = [
-    '()'
-]
-results = [];
-result = [];
-doExchange(arr, 0);
-function doExchange(arr, index){
-    for (var i = 0; i<arr[index].length; i++) {
-        result[index] = arr[index][i];
-        if (index != arr.length - 1) {
-            doExchange(arr, index + 1)
-        } else {
-            results.push(result.join(','))
-        }
-    }
-}
-
-console.log( results);//

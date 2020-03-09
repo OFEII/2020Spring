@@ -2,10 +2,10 @@
 function debounce(fn,delay) {
     let timer = null
     return function () {
-        if(!timer){
+        if(timer!==null){
             clearTimeout(timer)
-            timer = setTimeout(fn,delay)
         }
+        timer = setTimeout(fn,delay)
     }
 }
 
@@ -18,25 +18,25 @@ function handle() {
 window.addEventListener('scroll',throttle2(handle,1000))
 
 // throttle（时间戳）
-// function throttle(fn,delay) {
-//     let pre = Date.now()
-//     return function () {
-//         let now = Date.now()
-//         if(now-pre>=delay){
-//             fn.apply(this, arguments)
-//             prev = Date.now()
-//         }
-//     }
-// }
-// 节流throttle代码（定时器)
-function throttle2(fn,delay) {
-    let timer = null
+function throttle(fn,delay) {
+    let pre = Date.now()
     return function () {
-        if(!timer){
-            timer = setTimeout(function () {
-                fn.apply(this,arguments)
-                timer = null
-            },delay)
+        let now = Date.now()
+        if(now-pre>=delay){
+            fn.apply(this, arguments)
+            prev = Date.now()
         }
     }
 }
+// 节流throttle代码（定时器)
+// function throttle2(fn,delay) {
+//     let timer = null
+//     return function () {
+//         if(!timer){
+//             timer = setTimeout(function () {
+//                 fn.apply(this,arguments)
+//                 timer = null
+//             },delay)
+//         }
+//     }
+// }

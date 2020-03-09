@@ -7,7 +7,6 @@ function sumStrings(a,b){
     while (a.length || b.length || c){
         c += ~~a.pop() + ~~b.pop();
         res = c % 10 + res;
-        //console.log(res);
         c = c>9;
     }
     return res.replace(/^0+/,'');

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <input type="file" id="upload">
+    <button id="btn-upload"> upload </button>
+    
+</body>
+<script>
+var file = document.getElementById("file");
+var upload = document.getElementById("upload");
+var ajax = new XMLHttpRequest();
+ajax.open("POST", "您的url");
+ajax.send(file.value);
+window.onreadystatechange = funcation () ;{
+    if(ajax.readyState === 4, ajax.status === 200){
+        var response = ajax.responseText
+    }
+}
+</script>
+</html>

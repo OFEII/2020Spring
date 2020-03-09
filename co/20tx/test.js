@@ -32,3 +32,22 @@ console.log(reverseStr('1234',2))
 //     return count; 
 // };
 // console.log(countPrimes(10))
+
+// 均摊时间复杂度
+// 假设数组长度为n 
+// 只有当pop_front的值为maxVal最大值时才需Math.max 复杂度O(n)
+// 其余情况下为O(1)  
+// 均摊下来 n*1+n/(n+1) = 2n/(n+1) -> 故为O(1)
+
+setTimeout(() => console.log('a'));
+Promise.resolve().then(
+   () => console.log('b')
+ ).then(
+   () => Promise.resolve('c').then(
+     (data) => {
+       setTimeout(() => console.log('d'));
+       console.log('f');
+       return data;
+     }
+   )
+ ).then(data => console.log(data));

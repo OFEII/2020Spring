@@ -1,0 +1,31 @@
+.btn-base{
+    border: none;
+    outline: none;
+    padding: .42rem .7rem;
+    border-radius: 6px;
+    font-size: .8rem;
+    letter-spacing: 2px;
+    margin-right: 1rem;
+}
+.btn-base:hover{
+    cursor: pointer;
+    animation: jelly .5s;
+}
+@keyframes jelly {
+    0%,100%{
+        transform: scale(1,1);
+    }
+    25%,75%{
+        transform: scale(.9,1.1);
+    }
+    50%{
+        transform: scale(1.1,.9)
+    }
+}
+
+.gradient-text{
+    background-image: linear-gradient(109deg, #ffab7e 0%, #ffd061 100%);
+    -webkit-background-clip: text;
+    background-clip: text;   
+    color: transparent;
+}

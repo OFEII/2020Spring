@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>双向绑定</title>
+</head>
+<body>
+    双向绑定<br/>
+    <input type="text" id="model"><br/>
+    <div id="modelText"></div>    
+    
+</body> 
+<script>
+    let user = {};
+    let defaultValue = "test01";
+    let model = document.querySelector("#model");
+    let modelText = document.querySelector("#modelText");
+    model.value = defaultValue;
+    modelText.textContent = defaultValue;
+      
+    //定义属性 监控改变
+    Object.defineProperty(user,"name",{
+        get:function(){
+        return defaultValue;
+        },
+        set:function(newValue){
+        defaultValue = newValue;
+        model.value = newValue;
+        modelText.textContent = newValue;
+        }
+    })
+      
+    model.addEventListener("keyup", function () {
+        user.name = this.value;
+    }, false)
+</script>
+</html>
+
+
+     

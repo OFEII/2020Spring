@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>flex实现两栏布局和三栏布局</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .container{
+            display: flex;
+        }
+        .left{
+            background: #fcd9df;
+            width: 300px;
+            height: 100px;
+        }
+        .center{
+            flex:1;
+            background: #cfe0f8;
+        }
+        .right{
+            height: 100px;
+            width: 300px;
+            background: #80a4ce;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left"></div>
+        <div class="center"></div>
+        <div class="right"></div>
+    </div>
+    
+</body>
+</html>

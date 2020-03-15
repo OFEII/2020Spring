@@ -27,4 +27,13 @@ var findNumberIn2DArray = function(matrix, target) {
 };
 console.log(findNumberIn2DArray([],0))
 
+var account = {
+    phone: "1234567",
+    getPhone: function() {
+        return this.phone;
+    }
+};
+var mycount = account.getPhone;
+console.log(account.getPhone());
+console.log(mycount());
 
